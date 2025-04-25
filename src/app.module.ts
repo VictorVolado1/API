@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TaskModule } from './tasks/tasks.module';
-import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [TaskModule,
+  imports: [
+    TaskModule,
+    UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
