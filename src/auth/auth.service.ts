@@ -28,15 +28,15 @@ export class AuthService {
 
     }
 
-    async loging(loginDto: LoginDto){
+    async loging({ email, password }: LoginDto){
 
-        const user = await this.usersService.findOneByEmail(loginDto.email);
+        const user = await this.usersService.findOneByEmail(email);
         
         if (!user) {
             throw new UnauthorizedException('Invalid credentials.');
         }
 
-        const validPassword = await this.bcryptServiceService.comparePassword(loginDto.password ,user.password);
+        const validPassword = await this.bcryptServiceService.comparePassword(user.password ,user.password);
 
         if(!validPassword){
             throw new UnauthorizedException('Invalid credentials.');
@@ -47,7 +47,7 @@ export class AuthService {
 
         return {
             token,
-            user
+            email
         };
 
     }
