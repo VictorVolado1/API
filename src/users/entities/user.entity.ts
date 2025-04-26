@@ -1,5 +1,6 @@
 import { Exclude } from "class-transformer";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
+import { Task } from "src/tasks/entities/task.entity";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from "typeorm";
 
 @Entity()
 export class User {
@@ -21,5 +22,8 @@ export class User {
 
     @CreateDateColumn({name: 'updated_at'})
     updatedAt: Date;
+    
+    @OneToMany(() => Task, (task) => task.user)
+    tasks: Task[];
 
 }

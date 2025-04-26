@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { RegisterDto } from './dto/register.dto';
-import { BcryptServiceService } from 'src/bcrypt-service/bcrypt-service.service';
+import { BcryptServiceService } from 'src/auth-security/bcrypt-service.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 
@@ -42,9 +42,13 @@ export class AuthService {
             throw new UnauthorizedException('Invalid credentials.');
         }
 
-        const payload = { }
+        const payload = { email: user.email };
+        const token = await this.jwtService.signAsync(payload);
 
-        return user;
+        return {
+            token,
+            user
+        };
 
     }
 

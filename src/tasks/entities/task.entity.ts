@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from "typeorm";
+import { User } from "src/users/entities/user.entity";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity()
 export class Task {
@@ -17,5 +18,9 @@ export class Task {
 
     @Column({default: false})
     completed: boolean;
+
+    @ManyToOne(() => User, (user) => user.tasks)
+    @JoinColumn({ name: 'user_id' })
+    user: User;
     
 }
