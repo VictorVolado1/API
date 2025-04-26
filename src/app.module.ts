@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TaskModule } from './tasks/tasks.module';
-import { UsersService } from './users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { BcryptServiceModule } from './bcrypt-service/bcrypt-service.module';
 
 @Module({
   imports: [
@@ -19,8 +20,10 @@ import { UsersModule } from './users/users.module';
       synchronize: true,
       logging: false
     }),
+    AuthModule,
+    BcryptServiceModule,
   ],
-  providers: [UsersService]
+  providers: []
 })
 
 export class AppModule {}
