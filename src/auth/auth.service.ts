@@ -29,20 +29,20 @@ export class AuthService {
     }
 
     async loging({ email, password }: LoginDto){
-
-        const user = await this.usersService.findOneByEmail(email);
         
+        const user = await this.usersService.findOneByEmail(email);
+    
         if (!user) {
             throw new UnauthorizedException('Invalid credentials.');
         }
-
-        const validPassword = await this.bcryptServiceService.comparePassword(user.password ,user.password);
+        
+        const validPassword = await this.bcryptServiceService.comparePassword(password ,user.password);
 
         if(!validPassword){
             throw new UnauthorizedException('Invalid credentials.');
         }
 
-        const payload = { email: user.email };
+        const payload = { email: user.email, sub: user.id };
         const token = await this.jwtService.signAsync(payload);
 
         return {

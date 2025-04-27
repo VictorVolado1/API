@@ -20,7 +20,7 @@ export class Task {
     completed: boolean;
 
     @ManyToOne(() => User, (user) => user.tasks)
-    @JoinColumn({ name: 'user_id' })
+    @JoinColumn({ name: 'id_user' })
     user: User;
     
 }
