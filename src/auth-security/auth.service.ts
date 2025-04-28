@@ -38,10 +38,10 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
-    const validPassword =  this.comparePassword(
+    const validPassword =  await this.comparePassword(
       password,
       user.password,
-    );
+    );  
 
     if (!validPassword) {
       throw new UnauthorizedException('Invalid credentials.');
