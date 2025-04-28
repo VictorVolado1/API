@@ -8,7 +8,11 @@ import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports:[
-    UsersModule, 
+    UsersModule,
+    ConfigModule.forRoot({
+      load: [() => ({ JWT_SECRET: process.env.JWT_SECRET, JWT_EXPIRATION_TIME: process.env.JWT_EXPIRATION_TIME })],
+      isGlobal: true,
+    }), 
     JwtModule.register({
       global: true,
       secret: 'CONCREDITO',
