@@ -5,18 +5,16 @@ import { UsersModule } from 'src/users/users.module';
 import { AuthGuard } from './guard/auth.guard';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports:[
     UsersModule,
-    ConfigModule.forRoot({
-      load: [() => ({ JWT_SECRET: process.env.JWT_SECRET, JWT_EXPIRATION_TIME: process.env.JWT_EXPIRATION_TIME })],
-      isGlobal: true,
-    }), 
     JwtModule.register({
       global: true,
-      secret: 'CONCREDITO',
-      signOptions: { expiresIn: '360s' },
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: process.env.JWT_EXPIRATION_TIME },
     }),
     ConfigModule,
   ],
