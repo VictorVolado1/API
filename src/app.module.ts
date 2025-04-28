@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TaskModule } from './tasks/tasks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth-security/auth.module';
 import { BcryptServiceModule } from './auth-security/bcrypt-service.module';
 
 @Module({

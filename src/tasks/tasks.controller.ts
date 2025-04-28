@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, UseGuards } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { CreateTaskDto } from "./dto/create-task.dto";
-import { AuthGuard } from "src/auth/guard/auth.guard";
+import { AuthGuard } from "src/auth-security/guard/auth.guard";
 import { UserActive } from "src/common/decorators/user.decorator";
 import { ActiveUserInterface } from "src/common/interfaces/active-user.interface";
 
