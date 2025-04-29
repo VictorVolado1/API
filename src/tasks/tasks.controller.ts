@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { AuthGuard } from "src/auth-security/guard/auth.guard";
 import { UserActive } from "src/common/decorators/user.decorator";
 import { ActiveUserInterface } from "src/common/interfaces/active-user.interface";
+import { UpdateTaskdto } from "./dto/update-task.dto";
 
 @Controller('/tasks')
 export class TaskController {
@@ -28,8 +29,13 @@ export class TaskController {
         return this.tasksService.createTask(createTaskDto, user);
     }
 
+    @Patch(':id')
+    @UseGuards(AuthGuard)
+    async updateTask(@Param('id') id: number, @Body() updateTaskdto: UpdateTaskdto, @UserActive() user: ActiveUserInterface){
+        return this.tasksService.updateTask(id, updateTaskdto, user);
+    }
+
     @Delete(':id')
-    @HttpCode(204)
     @UseGuards(AuthGuard)
     async deleteTask(@Param('id') id: number){
         return this.tasksService.deleteTask(id);

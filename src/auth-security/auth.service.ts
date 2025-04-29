@@ -22,7 +22,7 @@ export class AuthService {
     const user = await this.usersService.findOneByEmail(registerDto.email);
 
     if (user) {
-      throw new BadRequestException('El Email se encuentra registrado.');
+      throw new UnauthorizedException('El Email se encuentra registrado.');
     }
 
     registerDto.password = await this.hashPassword(registerDto.password);

@@ -4,6 +4,7 @@ import { Task } from "./entities/task.entity";
 import { Repository } from "typeorm";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { ActiveUserInterface } from "src/common/interfaces/active-user.interface";
+import { UpdateTaskdto } from "./dto/update-task.dto";
 
 @Injectable()
 export class TasksService{
@@ -38,6 +39,20 @@ export class TasksService{
         const result = await this.tasksRepository.delete(id);
 
         if(result.affected === 0) throw new NotFoundException;
+
+    }
+
+    async updateTask(id: number, updateTaskdto: UpdateTaskdto, user: ActiveUserInterface): Promise<Task> {
+
+        const task = await this.tasksRepository.findOne({
+            where: {id: id, user: {id: user.sub}}
+        });
+
+        if(!task) throw new NotFoundException;
+
+        task.completed = updateTaskdto.completed;
+
+        return this.tasksRepository.save(task);
 
     }
 
