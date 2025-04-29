@@ -1,5 +1,5 @@
 import { User } from "src/users/entities/user.entity";
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Task {
@@ -16,7 +16,7 @@ export class Task {
     @CreateDateColumn({name: 'created_at'})
     createdAt: Date;
 
-    @CreateDateColumn({name: 'updated_at'})
+    @UpdateDateColumn({name: 'updated_at'})
     updatedAt: Date;
 
     @Column({default: false})

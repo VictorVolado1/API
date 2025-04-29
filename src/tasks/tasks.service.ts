@@ -1,18 +1,23 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Task } from "./entities/task.entity";
-import { Repository } from "typeorm";
+import { Repository, Between } from "typeorm";
 import { CreateTaskDto } from "./dto/create-task.dto";
 import { ActiveUserInterface } from "src/common/interfaces/active-user.interface";
 import { UpdateTaskdto } from "./dto/update-task.dto";
+import { ExportTasksdto } from "./dto/export-tasks.dto";
+import * as XLSX from 'xlsx';
+import * as moment from 'moment';
 
 @Injectable()
 export class TasksService{
 
     constructor(@InjectRepository(Task) private tasksRepository: Repository<Task>){}
 
-    findTasks(): Promise<Task[]> {
-        return this.tasksRepository.find();
+    findTasks(user: ActiveUserInterface): Promise<Task[]> {
+        return this.tasksRepository.find({
+            where: {user: {id: user.sub}}
+        });
     }
 
     async findTasksById(id: number): Promise<Task> {
@@ -53,6 +58,57 @@ export class TasksService{
         task.completed = updateTaskdto.completed;
 
         return this.tasksRepository.save(task);
+
+    }
+
+    async exportTasks(exportTasksdto: ExportTasksdto, user: ActiveUserInterface): Promise<Buffer> {
+       
+        const { completed, createdAt, updatedAt } = exportTasksdto;
+
+        const where: any = {
+            user: { id: user.sub },
+        };
+      
+        if ((completed !== null && completed !== undefined) && completed !== true) {
+            where.completed = completed;
+        }
+        if (createdAt?.from && createdAt?.to) {
+            where.createdAt = Between(
+              moment(createdAt.from).startOf('day').toDate(),
+              moment(createdAt.to).endOf('day').toDate(),
+            );
+          }
+      
+        if (updatedAt?.from && updatedAt?.to) {
+            where.updatedAt = Between(
+              moment(updatedAt.from).startOf('day').toDate(),
+              moment(updatedAt.to).endOf('day').toDate(),
+            );
+        }
+
+        const tasks = await this.tasksRepository.find({
+            where,
+        });
+
+        const data = tasks.map((task) => ({
+            id: task.id,
+            Nombre: task.name,
+            Descripcion: task.description,
+            Estatus: task.completed,
+            Creada: moment(task.createdAt).format('YYYY-MM-DD'),
+            Ultima_actualizacion: moment(task.updatedAt).format('YYYY-MM-DD'),
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Tasks');
+        
+        const buffer = XLSX.write(workbook, {
+            type: 'buffer',
+            bookType: 'xlsx',
+        });
+
+        return buffer;
 
     }
 
