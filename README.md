@@ -12,6 +12,7 @@ Gestión y resporte de tareas.
 
 Conexión a base de datos MySQL usando TypeORM.
 
+ ```env
 📦 Requisitos
 MySQL
 Versión de Node.js recomendada: 18.x o superior
