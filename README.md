@@ -14,6 +14,7 @@ Conexión a base de datos MySQL usando TypeORM.
 3. npm install
 4. variables de entorno ( Crea un .env en la raíz del proyecto con las siguientes variables:
 
+  ```env
   DB_HOST=localhost
   DB_PORT=3306            # Puedes cambiarlo si tu MySQL usa otro puerto
   DB_USER=root            # Cambiar según tu configuración local
