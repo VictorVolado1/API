@@ -16,7 +16,10 @@ export class TasksService{
 
     findTasks(user: ActiveUserInterface): Promise<Task[]> {
         return this.tasksRepository.find({
-            where: {user: {id: user.sub}}
+            where: {user: {id: user.sub}},
+            order: {
+                createdAt: 'DESC'
+            }
         });
     }
 
