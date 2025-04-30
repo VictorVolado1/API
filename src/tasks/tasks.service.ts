@@ -90,16 +90,49 @@ export class TasksService{
             where,
         });
 
-        const data = tasks.map((task) => ({
-            id: task.id,
-            Nombre: task.name,
-            Descripcion: task.description,
-            Estatus: task.completed,
-            Creada: moment(task.createdAt).format('YYYY-MM-DD'),
-            Ultima_actualizacion: moment(task.updatedAt).format('YYYY-MM-DD'),
-        }));
+        const data = tasks.map((task) => {
 
+            let duration = '';
+            if (task.completed) {
+                const inicio = moment(task.createdAt);
+                const fin = moment(task.updatedAt);
+                const diff = moment.duration(fin.diff(inicio));
+                
+                const days = Math.floor(diff.asDays());
+                const hours = diff.hours();
+                const minutes = diff.minutes();
+                
+                duration = [
+                    days > 0 ? `${days}d` : '',
+                    hours > 0 ? `${hours}h` : '',
+                    minutes > 0 ? `${minutes}m` : ''
+                ].filter(Boolean).join(' ') || '0m';
+            }
+    
+            return {
+                id: task.id,
+                Nombre: task.name,
+                Descripción: task.description,
+                Estado: task.completed ? 'Finalizada' : 'Pendiente',
+                'Fecha Creacion': moment(task.createdAt).format('YYYY-MM-DD HH:mm'),
+                'Fecha Ultima Actualizacion': task.completed ? moment(task.updatedAt).format('YYYY-MM-DD HH:mm') : 'Aun Pendiente',
+                'Duración': duration
+            };
+        });
+    
         const worksheet = XLSX.utils.json_to_sheet(data);
+        
+        worksheet['!cols'] = [
+            { width: 8 },
+            { width: 20 },
+            { width: 40 },
+            { width: 12 },
+            { width: 16 },
+            { width: 16 },
+            { width: 15 }
+        ];
+    
+    
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Tasks');
         
