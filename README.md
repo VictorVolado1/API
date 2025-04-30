@@ -35,3 +35,6 @@ src/
 ├── users/           # Módulo para la gestión de usuarios
 ├── app.module.ts    # Módulo raíz de la aplicación
 └── main.ts          # Punto de entrada principal de la aplicación
+
+Versión de Node.js recomendada: 18.x o superior
+Óptimo: Node 18.x (LTS) o Node 20.x (actual LTS).
