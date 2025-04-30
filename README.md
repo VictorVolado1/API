@@ -12,13 +12,18 @@ Gestión y resporte de tareas.
 
 Conexión a base de datos MySQL usando TypeORM.
 
+📦 Requisitos
+
+1.MySQL, 
+2.Versión de Node.js recomendada: 18.x o superior - Óptimo: Node 18.x (LTS) o Node 20.x (actual LTS).
+
 📦 Instalación
 1. git clone https://github.com/VictorVolado1/API.git
 2. cd API
 3. npm install
 4. variables de entorno ( Crea un .env en la raíz del proyecto con las siguientes variables:
-5. crear BD tasks,
-6. synchronize: true, creacion de tablas (recomendado solo en develop)
+5. crear BD tasks en Mysql localmente
+6. synchronize: true (configuracion lista en typeorm), creacion de tablas (recomendado solo en develop)
   ```env
   DB_HOST=localhost
   DB_PORT=3306            # Puedes cambiarlo si tu MySQL usa otro puerto
@@ -42,6 +47,3 @@ src/
 ├── users/           # Módulo para la gestión de usuarios
 ├── app.module.ts    # Módulo raíz de la aplicación
 └── main.ts          # Punto de entrada principal de la aplicación
-
-Versión de Node.js recomendada: 18.x o superior
-Óptimo: Node 18.x (LTS) o Node 20.x (actual LTS).
