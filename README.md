@@ -2,8 +2,12 @@
 Aplicación backend desarrollada con NestJS, utilizando TypeORM y MySQL como base de datos relacional. Esta API gestiona tareas con autenticación basada en JWT y Bcrypt.
 
 🚀 Características
-Autenticación con JWT.
-
+1. Autenticación con JWT.
+2. Bcrypt
+3. Moment
+4. XLS
+5. DTOs
+   
 Gestión y resporte de tareas.
 
 Conexión a base de datos MySQL usando TypeORM.
