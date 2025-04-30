@@ -27,7 +27,11 @@ export class AuthService {
 
     registerDto.password = await this.hashPassword(registerDto.password);
 
-    return await this.usersService.create(registerDto);
+    const userCreated = await this.usersService.create(registerDto);
+    userCreated.password = '';
+
+    return userCreated
+
   }
 
   async loging({ email, password }: LoginDto) {
