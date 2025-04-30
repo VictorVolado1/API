@@ -12,6 +12,11 @@ Gestión y resporte de tareas.
 
 Conexión a base de datos MySQL usando TypeORM.
 
+📦 Requisitos
+MySQL
+Versión de Node.js recomendada: 18.x o superior
+Óptimo: Node 18.x (LTS) o Node 20.x (actual LTS).
+
 📦 Instalación
 1. git clone https://github.com/VictorVolado1/API.git
 2. cd API
@@ -42,6 +47,3 @@ src/
 ├── users/           # Módulo para la gestión de usuarios
 ├── app.module.ts    # Módulo raíz de la aplicación
 └── main.ts          # Punto de entrada principal de la aplicación
-
-Versión de Node.js recomendada: 18.x o superior
-Óptimo: Node 18.x (LTS) o Node 20.x (actual LTS).
