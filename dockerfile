@@ -1,4 +1,3 @@
-# Etapa 1: Construcción
 FROM node:20-alpine AS builder
 
 WORKDIR /app
@@ -11,17 +10,12 @@ COPY . .
 
 RUN npm run build
 
-FROM node:20-alpine
+FROM nginx:stable-alpine
 
-WORKDIR /app
+RUN rm -rf /etc/nginx/conf.d/default.conf
 
-COPY package*.json ./
-RUN npm install --production
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-COPY --from=builder /app/dist ./dist
+EXPOSE 80
 
-COPY --from=builder /app/node_modules ./node_modules
-
-EXPOSE 3000
-
-CMD ["node", "dist/main"]
+CMD ["nginx", "-g", "daemon off;"]
