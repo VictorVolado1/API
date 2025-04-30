@@ -1,6 +1,7 @@
 import {
   Injectable,
   UnauthorizedException,
+  ConflictException
 } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { RegisterDto } from './dto/register.dto';
@@ -21,7 +22,7 @@ export class AuthService {
     const user = await this.usersService.findOneByEmail(registerDto.email);
 
     if (user) {
-      throw new UnauthorizedException('El Email se encuentra registrado.');
+      throw new ConflictException('El Email se encuentra registrado.');
     }
 
     registerDto.password = await this.hashPassword(registerDto.password);
