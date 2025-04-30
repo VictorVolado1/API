@@ -14,7 +14,7 @@ Conexión a base de datos MySQL usando TypeORM.
 
 📦 Requisitos
 
-1.MySQL
+1.MySQL, 
 2.Versión de Node.js recomendada: 18.x o superior - Óptimo: Node 18.x (LTS) o Node 20.x (actual LTS).
 
 📦 Instalación
